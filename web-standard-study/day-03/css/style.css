@@ -1,0 +1,35 @@
+body {
+  background-color: aliceblue;
+  margin: 0;
+}
+
+.main-header {
+  background-color: navy;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-title {
+  text-align: center;
+  padding: 0px 40px;
+}
+
+.header-item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.title-main {
+  border: 1px solid black;
+}
+
+.main-main {
+  display: flex;
+  gap: 10px;
+}
+
+.main-item {
+  border: 1px solid black;
+}
