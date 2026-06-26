@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "기계식 키보드",
+    "price": 89000,
+    "stockCount": 10,
+    "category": "PC용품",
+    "isOnSale": true
+  },
+  {
+    "id": 2,
+    "name": "무선 마우스",
+    "price": 39000,
+    "stockCount": 0,
+    "category": "PC용품",
+    "isOnSale": false
+  },
+  {
+    "id": 3,
+    "name": "27인치 모니터",
+    "price": 240000,
+    "stockCount": 5,
+    "category": "디스플레이",
+    "isOnSale": true
+  },
+  {
+    "id": 4,
+    "name": "USB 허브",
+    "price": 25000,
+    "stockCount": 15,
+    "category": "PC용품",
+    "isOnSale": false
+  },
+  {
+    "id": 5,
+    "name": "HDMI 케이블",
+    "price": 12000,
+    "stockCount": 30,
+    "category": "액세서리",
+    "isOnSale": true
+  }
+]
