@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript DOM 조작</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <h1 id="main-title">DOM 조작 실습</h1>
+      <p class="description">JavaScript로 HTML 요소를 선택하고 변경해봅니다.</p>
+    </header>
+
+    <main class="container">
+      <section class="practice-section">
+        <h2>기본 요소 선택</h2>
+        <p id="target-text">이 문장은 JavaScript로 변경될 예정입니다.</p>
+        <p class="info-text">첫 번째 안내 문장입니다.</p>
+        <p class="info-text">두 번째 안내 문장입니다.</p>
+      </section>
+
+      <section class="practice-section">
+        <h2>입력 요소</h2>
+        <label for="user-name">이름</label>
+        <input id="user-name" type="text" value="민수" />
+        <p id="name-result">입력값 결과가 여기에 표시됩니다.</p>
+      </section>
+
+      <section class="practice-section">
+        <h2>상품 목록</h2>
+        <div id="product-list" class="product-list"></div>
+      </section>
+    </main>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>
