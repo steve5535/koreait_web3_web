@@ -1,0 +1,132 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: #333333;
+  background-color: #f5f5f5;
+  line-height: 1.6;
+}
+
+.site-header {
+  background-color: navy;
+  color: white;
+  padding: 32px 20px;
+  text-align: center;
+}
+
+.site-header h1 {
+  margin: 0 0 8px;
+}
+
+.site-header p {
+  margin: 0;
+}
+
+.container {
+  width: 100%;
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+.practice-section {
+  background-color: white;
+  border: 1px solid #dddddd;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.practice-section h2 {
+  margin-top: 0;
+  color: navy;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: navy;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #00005f;
+}
+
+.message {
+  margin-top: 12px;
+  font-weight: bold;
+}
+
+.success {
+  color: green;
+}
+
+.error {
+  color: red;
+}
+
+.product-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.product-card {
+  border: 1px solid #dddddd;
+  border-radius: 12px;
+  padding: 20px;
+  background-color: white;
+}
+
+.product-card h3 {
+  margin-top: 0;
+  color: navy;
+}
+
+.product-card p {
+  margin: 8px 0;
+}
+
+.delete-button {
+  margin-top: 12px;
+  background-color: crimson;
+}
+
+.delete-button:hover {
+  background-color: darkred;
+}
+
+.empty-message {
+  color: gray;
+}
+
+@media (max-width: 600px) {
+  .product-list {
+    grid-template-columns: 1fr;
+  }
+}
