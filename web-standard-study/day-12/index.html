@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>웹 스토리지 상품 관리</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <h1>웹 스토리지 상품 관리</h1>
+      <p>localStorage와 sessionStorage를 사용해 데이터를 저장합니다.</p>
+    </header>
+
+    <main class="container">
+      <section class="practice-section">
+        <h2>상품 추가</h2>
+
+        <form id="product-form">
+          <div class="form-group">
+            <label for="product-name">상품명</label>
+            <input
+              id="product-name"
+              type="text"
+              placeholder="상품명을 입력하세요"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="product-price">상품 가격</label>
+            <input
+              id="product-price"
+              type="number"
+              placeholder="상품 가격을 입력하세요"
+            />
+          </div>
+
+          <button type="submit">상품 추가</button>
+        </form>
+
+        <p id="form-message" class="message"></p>
+      </section>
+
+      <section class="practice-section">
+        <h2>상품 검색</h2>
+        <label for="search-input">검색어</label>
+        <input
+          id="search-input"
+          type="text"
+          placeholder="상품명을 검색하세요"
+        />
+        <p class="help-text">검색어는 sessionStorage에 저장됩니다.</p>
+      </section>
+
+      <section class="practice-section">
+        <div class="section-header">
+          <h2>상품 목록</h2>
+          <button id="reset-button" type="button" class="reset-button">
+            전체 초기화
+          </button>
+        </div>
+
+        <p id="storage-status" class="storage-status"></p>
+        <div id="product-list" class="product-list"></div>
+      </section>
+    </main>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>
