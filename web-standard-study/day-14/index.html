@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>랜덤 메뉴 추첨기</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <header>
+        <h1>🍽️ 오늘 뭐 먹지?</h1>
+        <p>결정하기 힘들 땐 운명에 맡겨보세요!</p>
+      </header>
+
+      <section class="input-section">
+        <form id="menu-form">
+          <input
+            type="text"
+            id="menu-input"
+            placeholder="예: 돈까스, 제육볶음"
+            required
+            autocomplete="off"
+          />
+          <button type="submit" class="btn-add">후보 추가</button>
+        </form>
+      </section>
+
+      <section class="result-section">
+        <div id="result-display" class="result-display">
+          메뉴를 추가하고 추첨을 시작하세요!
+        </div>
+        <div class="action-buttons">
+          <button id="btn-pick" class="btn-pick">🎲 메뉴 추첨하기</button>
+          <button id="btn-clear" class="btn-clear">🗑️ 목록 초기화</button>
+        </div>
+      </section>
+
+      <section class="list-section">
+        <h3>등록된 메뉴 후보</h3>
+        <ul id="menu-list" class="menu-list"></ul>
+      </section>
+    </div>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>

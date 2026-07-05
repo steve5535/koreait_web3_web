@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>나만의 버킷리스트</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <header class="app-header">
+        <h1>✨ My Bucket List</h1>
+        <p>살면서 꼭 이루고 싶은 꿈과 목표를 기록해보세요!</p>
+      </header>
+
+      <section class="input-section">
+        <form id="bucket-form">
+          <div class="input-group">
+            <select id="bucket-category" class="category-select">
+              <option value="목표">목표</option>
+              <option value="운동">운동</option>
+              <option value="취미">취미</option>
+              <option value="여행">여행</option>
+            </select>
+            <input
+              type="text"
+              id="bucket-input"
+              placeholder="새로운 버킷리스트를 입력하세요."
+              required
+              autocomplete="off"
+            />
+            <button type="submit" class="add-btn">추가</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="filter-section">
+        <input
+          type="search"
+          id="search-input"
+          placeholder="등록한 버킷리스트 검색..."
+        />
+      </section>
+
+      <section class="list-section">
+        <ul id="bucket-list" class="bucket-list"></ul>
+      </section>
+    </div>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>
