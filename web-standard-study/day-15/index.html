@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>나만의 TIL 아카이브 보드</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>💡 TIL Archive Board</h1>
+        <p>오늘 배운 지식을 기록하고 새로고침해도 잃어버리지 마세요!</p>
+      </header>
+
+      <div class="content-layout">
+        <section class="section-card">
+          <h2 class="section-title">오늘의 학습 기록하기</h2>
+          <form id="til-form">
+            <div class="form-group">
+              <label for="til-date">날짜</label>
+              <input type="date" id="til-date" class="form-control" required />
+            </div>
+            <div class="form-group">
+              <label for="til-subject">학습 주제</label>
+              <input
+                type="text"
+                id="til-subject"
+                class="form-control"
+                placeholder="예: 자바스크립트 DOM 조작"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="til-content">상세 내용</label>
+              <textarea
+                id="til-content"
+                class="form-control"
+                placeholder="오늘 새롭게 알게 된 점이나 해결한 문제를 적어보세요."
+                required
+              ></textarea>
+            </div>
+            <div class="form-group">
+              <label for="til-level">이해도 / 난이도</label>
+              <select id="til-level" class="form-control">
+                <option value="하">하 (완벽히 이해함)</option>
+                <option value="중">중 (복습이 필요함)</option>
+                <option value="상">상 (추가 학습 필수)</option>
+              </select>
+            </div>
+            <button type="submit" class="btn">아카이브에 저장</button>
+          </form>
+        </section>
+
+        <section class="section-card">
+          <h2 class="section-title">기록된 아카이브 목록</h2>
+
+          <div class="search-box">
+            <input
+              type="search"
+              id="search-input"
+              class="form-control"
+              placeholder="주제 또는 내용으로 검색..."
+            />
+          </div>
+
+          <div id="til-list" class="til-list"></div>
+        </section>
+      </div>
+    </div>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>
