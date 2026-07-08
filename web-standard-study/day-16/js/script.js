@@ -7,6 +7,7 @@ const resultCount = document.getElementById('result-count');
 const searchForm = document.getElementById('search-form');
 const searchInput = document.getElementById('search-input');
 const categorySelect = document.getElementById('category-select');
+const productDetail = document.getElementById('product-detail');
 
 async function loadProducts() {
   try {
@@ -76,7 +77,70 @@ async function loadProductsByCategory(category) {
 }
 
 loadCategories();
-loadProductsByCategory('laptops');
+
+const resetButton = document.getElementById('reset-button');
+
+resetButton.addEventListener('click', () => {
+  searchInput.value = '';
+  categorySelect.value = '';
+  productDetail.classList.add('empty-detail');
+  productDetail.textContent = '상품 카드에서 상세 보기 버튼을 클릭하면 상세 정보가 표시됩니다.';
+
+  loadProducts();
+})
+
+
+productList.addEventListener('click', (event) => {
+  if (event.target.classList.contains('detail-button')) {
+    const productId = event.target.dataset.id;
+    loadProductDetail(productId);
+  }
+})
+
+async function loadProductDetail(productId) {
+  try {
+    setStatus("상품 상세 정보를 불러오는 중입니다.");
+    const product = await fetchJson(`${API_BASE_URL}/${productId}`);
+
+    renderProductDetail(product);
+    setStatus('상품 상세 정보를 불러왔습니다.', 'success')
+  } catch (error) {
+    setStatus(error.message, 'error');
+  }
+}
+
+function renderProductDetail(product) {
+  productDetail.classList.remove('empty-detail');
+  productDetail.innerHTML = `
+    <div class="detail-layout">
+      <div>
+        <img class="detail-image" src="${product.thumbnail}" alt="${product.title}">
+      </div>
+      <div>
+        <h3 class="detail-title">${product.title}</h3>
+        <p>${product.description}</p>
+        <p>가격: $${product.price.toLocaleString()}</p>
+        <p>카테고리:${product.category}</p>
+        <p>평점:${product.rating}</p>
+        <p>재고:${product.stock}개</p>
+        <p>할인율:${product.discountPercentage}%</p>
+        <p>배송 정보:${product.shippingInformation}</p>
+        <p>반품 정책:${product.returnPolicy}</p>
+      </div>
+    </div>
+  `;
+}
+
+categorySelect.addEventListener('change', (event) => {
+  const category = event.target.value;
+
+  searchInput.value = '';
+  if (category === '') {
+    loadProducts();
+    return;
+  }
+  loadProductsByCategory(category);
+})
 
 searchForm.addEventListener('submit', (event) => {
   event.preventDefault();
