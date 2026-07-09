@@ -3,25 +3,103 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>학생 시간표</title>
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-    <div id="student-info">
-      <form id="class-input">
-        <label>반 입력</label>
-      </form>
-      <form id="choice-subject">
-        <label>선택과목1 입력</label>
-        <label>선택과목2 입력</label>
-        <label>선택과목3 입력</label>
-      </form>
+    <main class="app">
+      <section class="hero">
+        <div class="hero-title-area">
+          <p class="eyebrow">Student Timetable</p>
+          <h1 id="page-title">2학년 1반 시간표</h1>
+          <p class="sub-title">
+            반과 선택과목을 고르면 나에게 맞는 주간 시간표가 표시됩니다.
+          </p>
+        </div>
+      </section>
 
-      <div id="student-class">
-        <h3>2학년</h3>
-      </div>
-    </div>
+      <section class="layout">
+        <aside class="control-card">
+          <div class="control-section">
+            <label for="classSelect">반 선택</label>
+            <select id="classSelect"></select>
+          </div>
 
+          <div class="control-section">
+            <label for="dateInput">날짜 선택</label>
+            <input id="dateInput" type="date" />
+            <p class="help-text">
+              선택한 날짜가 포함된 주의 월~금 시간표를 보여줍니다.
+            </p>
+          </div>
+
+          <div class="control-section">
+            <div class="section-title">내 선택과목</div>
+            <p class="help-text">
+              학생마다 선택과목이 다를 수 있으니, 내가 듣는 과목명을 입력하거나
+              선택합니다.
+            </p>
+
+            <div class="subject-list">
+              <input
+                id="subject1"
+                list="subjectOptions"
+                type="text"
+                placeholder="선택과목 1 예: 화학"
+              />
+              <input
+                id="subject2"
+                list="subjectOptions"
+                type="text"
+                placeholder="선택과목 2 예: 물리학"
+              />
+              <input
+                id="subject3"
+                list="subjectOptions"
+                type="text"
+                placeholder="선택과목 3 예: 사회와 문화"
+              />
+            </div>
+
+            <datalist id="subjectOptions"></datalist>
+          </div>
+
+          <div class="control-section memo-box">
+            <div class="memo-title-row">
+              <label for="memoInput">오늘의 메모</label>
+              <span id="memoStatus">자동 저장</span>
+            </div>
+            <textarea
+              id="memoInput"
+              rows="5"
+              placeholder="준비물, 수행평가, 개인 메모 등을 적어보세요."
+            ></textarea>
+            <p class="help-text memo-help">
+              메모는 브라우저의 localStorage에 자동 저장됩니다.
+            </p>
+          </div>
+        </aside>
+
+        <section class="timetable-card">
+          <div class="table-top">
+            <div>
+              <strong>주간 시간표</strong>
+              <p id="selectedInfo">선택과목을 고르면 이곳에 함께 표시됩니다.</p>
+            </div>
+            <span class="badge">월 ~ 금 / 1 ~ 7교시</span>
+          </div>
+
+          <div class="table-scroll">
+            <table class="timetable">
+              <thead id="tableHead"></thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="data.js"></script>
     <script src="js/script.js"></script>
   </body>
 </html>
