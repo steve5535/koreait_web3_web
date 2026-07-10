@@ -312,7 +312,6 @@ function makeClassOptions() {
   // TODO. 반 이름을 숫자 기준으로 정렬하세요.
   classNames.sort();
   // TODO. classSelect 안에 option 태그를 추가하세요.
-  console.log(classSelect);
   classNames.forEach(className => {
     const classOption = document.createElement('option');
     classOption.value = className;
@@ -355,22 +354,31 @@ makeClassOptions();
 
 function makeSubjectOptions() {
   // TODO. 선택과목 이름을 담을 빈 배열을 만드세요.
-
+  let subjects = []
   // TODO. timetableData를 반복하세요.
-
-  // TODO. classroomName이 "선택"으로 시작하는 데이터만 처리하세요.
-
-  // TODO. getSubjectName 함수를 이용해서 과목명을 정리하세요.
-
-  // TODO. isRealSubject 함수를 이용해서 실제 과목인지 확인하세요.
-
-  // TODO. 중복되지 않는 과목만 배열에 추가하세요.
-
+  timetableData.forEach(tableInfo => {
+    // TODO. classroomName이 "선택"으로 시작하는 데이터만 처리하세요.
+    if (tableInfo.classroomName.startsWith('선택') && isRealSubject(getSubjectName(tableInfo.content))){
+        // TODO. getSubjectName 함수를 이용해서 과목명을 정리하세요.
+        const subjectName = getSubjectName(tableInfo.content);
+        // TODO. isRealSubject 함수를 이용해서 실제 과목인지 확인하세요.
+        if (isRealSubject(subjectName) && !subjects.includes(subjectName)) {
+            // TODO. 중복되지 않는 과목만 배열에 추가하세요.
+            subjects.push(subjectName);
+        }
+    }
+  })
   // TODO. 과목명을 가나다순으로 정렬하세요.
-
+  subjects.sort();
   // TODO. subjectOptions 안에 option 태그를 추가하세요.
+  subjects.forEach(subject => {
+    const subjectOption = document.createElement('option');
+    subjectOption.value = subject;
+    subjectOption.textContent = subject;
+    subjectOptions.appendChild(subjectOption);
+  })
 }
-
+makeSubjectOptions();
 
 /* ==================================================
    8단계. 날짜 기본값 넣기
@@ -381,13 +389,11 @@ function makeSubjectOptions() {
 
    처리 순서:
    --------------------------------------------------
-   1. timetableData의 첫 번째 데이터를 가져온다.
-   2. 첫 번째 데이터의 date 값을 가져온다.
-   3. dateInput.value에 넣는다.
+   1. 오늘 날짜를 dateInput.value에 넣는다.
 
    예:
    --------------------------------------------------
-   첫 번째 데이터의 날짜가 "2026-03-02"라면
+   오늘 날짜가 "2026-03-02"라면
    dateInput에는 "2026-03-02"가 들어가야 합니다.
 
    주의:
@@ -397,8 +403,12 @@ function makeSubjectOptions() {
 
 function setDefaultDate() {
   // TODO. timetableData의 첫 번째 날짜를 dateInput.value에 넣으세요.
+  const now = new Date();
+  const offset = now.getTimezoneOffset() * 60000;
+  const localDate = new Date(now.getTime() - offset).toISOString().substring(0, 10);
+  dateInput.value = localDate;
 }
-
+setDefaultDate();
 
 /* ==================================================
    9단계. 주차 이동 함수 만들기
@@ -489,15 +499,21 @@ function moveWeek(dayCount) {
 
 function getMonday(dateText) {
   // TODO. dateText를 Date 객체로 변환하세요.
-
+  date = new Date(dateText.value);
   // TODO. getDay()로 요일 숫자를 구하세요.
-
+  const day = date.getDay();
   // TODO. 월요일까지 이동해야 할 날짜 차이를 계산하세요.
-
-  // TODO. 날짜를 이동하세요.
-
+  let monday = 0;
+  if (day === 0) {
+    monday = 1;
+  } else {
+    // TODO. 날짜를 이동하세요.
+    monday = 1 - day;
+  }
   // TODO. 월요일 Date 객체를 반환하세요.
+  return date.setDate(date.getDate() + monday);
 }
+getMonday(dateInput);
 
 
 /* ==================================================
@@ -539,17 +555,21 @@ function getMonday(dateText) {
 
 function makeWeekDates(monday) {
   // TODO. 월~금 날짜를 담을 빈 배열을 만드세요.
-
+  let weekDates = [];
   // TODO. 5번 반복하세요.
-
-  // TODO. monday를 복사한 Date 객체를 만드세요.
-
-  // TODO. 복사한 날짜에 i일을 더하세요.
-
-  // TODO. YYYY-MM-DD 형식으로 바꿔 배열에 넣으세요.
-
+  for(let i = 0; i <= 4; i++) {
+    // TODO. monday를 복사한 Date 객체를 만드세요.
+    const newDate = new Date(monday);
+    // TODO. 복사한 날짜에 i일을 더하세요.
+    newDate.setDate(newDate.getDate() + i);
+    // TODO. YYYY-MM-DD 형식으로 바꿔 배열에 넣으세요.
+    const date = newDate.toISOString().split('T')[0];
+    weekDates.push(date);
+  }
   // TODO. 완성된 배열을 반환하세요.
+  return weekDates;
 }
+makeWeekDates(getMonday(dateInput));
 
 
 /* ==================================================
@@ -1010,12 +1030,13 @@ function makeSelectedSubjectText() {
 
 function getSubjectName(content) {
   // TODO. content를 문자열로 변환하세요.
-
+  content = String(content);
   // TODO. "[보강]" 문자를 제거하세요.
-
+  content = content.replace('[보강]','');
   // TODO. 앞뒤 공백을 제거하세요.
-
+  content = content.trim();
   // TODO. 정리된 과목명을 반환하세요.
+  return content;
 }
 
 
@@ -1063,9 +1084,12 @@ function getSubjectName(content) {
 
 function isRealSubject(subjectName) {
   // TODO. 과목이 아닌 값들을 배열로 만드세요.
-
+  notSubject = ['대체공휴일', '어린이날', '재량휴업일', '지방선거일', '노동절', '현충일', '제헌절', '여름방학', '토요휴업일', '자기주도학습'];
   // TODO. subjectName이 제외 배열에 포함되어 있는지 확인하세요.
-
+  if (notSubject.includes(subjectName)){
+    return false;
+  }
+  return true;
   // TODO. 과목이면 true, 과목이 아니면 false를 반환하세요.
 }
 
