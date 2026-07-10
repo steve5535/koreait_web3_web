@@ -193,7 +193,7 @@ label,
 }
 
 .help-text {
-  margin: -2px 0 12px;
+  margin: 5px 0 12px;
   color: #7a8699;
   font-size: 13px;
   line-height: 1.45;
@@ -252,7 +252,7 @@ textarea:focus {
   margin-bottom: 9px;
 }
 
-#memoStatus {
+#memo-status {
   margin-bottom: 9px;
   padding: 5px 9px;
   border-radius: 999px;

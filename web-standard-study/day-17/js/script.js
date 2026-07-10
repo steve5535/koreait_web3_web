@@ -40,10 +40,10 @@
 ================================================== */
 
 // 반 선택 select
-const classSelect = document.getElementById("classSelect");
+const classSelect = document.getElementById("class-select");
 
 // 날짜 선택 input
-const dateInput = document.getElementById("dateInput");
+const dateInput = document.getElementById("date-input");
 
 // 선택과목 입력 input 3개
 const subject1Input = document.getElementById("subject1");
@@ -51,16 +51,16 @@ const subject2Input = document.getElementById("subject2");
 const subject3Input = document.getElementById("subject3");
 
 // 선택과목 자동완성 datalist
-const subjectOptions = document.getElementById("subjectOptions");
+const subjectOptions = document.getElementById("subject-options");
 
 // 페이지 제목
-const pageTitle = document.getElementById("pageTitle");
+const pageTitle = document.getElementById("page-title");
 
 // 현재 주차 표시
 const weekLabel = document.getElementById("weekLabel");
 
 // 현재 선택한 선택과목 안내 문구
-const selectedInfo = document.getElementById("selectedInfo");
+const selectedInfo = document.getElementById("selected-info");
 
 // 시간표 테이블 thead, tbody
 const tableHead = document.getElementById("tableHead");
@@ -72,8 +72,8 @@ const nextWeekBtn = document.getElementById("nextWeekBtn");
 const firstWeekBtn = document.getElementById("firstWeekBtn");
 
 // 오늘의 메모
-const memoInput = document.getElementById("memoInput");
-const memoStatus = document.getElementById("memoStatus");
+const memoInput = document.getElementById("memo-input");
+const memoStatus = document.getElementById("memo-status");
 
 
 /* ==================================================
@@ -639,11 +639,15 @@ function formatDateForInput(date) {
 
 function formatShortDate(dateText) {
   // TODO. dateText를 Date 객체로 변환하세요.
-
+  const newDate = new Date(dateText);
   // TODO. 월과 일을 구하세요.
-
+  const month = newDate.getMonth()+1;
+  const date = newDate.getDate();
   // TODO. "월/일" 형태로 반환하세요.
+  return `${month}/${date}`;
 }
+formatShortDate("2026-03-02");
+
 
 
 /* ==================================================
@@ -678,14 +682,17 @@ function formatShortDate(dateText) {
 
 function renderTimetable() {
   // TODO. 현재 선택된 반 값을 가져오세요.
+  classSelect.addEventListener('change', (event) => {
+    // TODO. pageTitle에 "2학년 1반 시간표" 같은 제목을 넣으세요.
+    choiceClass = event.target.value;
+    pageTitle.textContent = `2학년 ${choiceClass}반 시간표`;
+  })
 
   // TODO. 현재 선택된 날짜 값을 가져오세요.
 
   // TODO. 선택 날짜가 포함된 주의 월요일을 구하세요.
 
   // TODO. 월요일부터 금요일까지 날짜 배열을 만드세요.
-
-  // TODO. pageTitle에 "1학기 1반 시간표" 같은 제목을 넣으세요.
 
   // TODO. weekLabel에 "3/2 ~ 3/6" 같은 주차 정보를 넣으세요.
 
@@ -695,6 +702,7 @@ function renderTimetable() {
 
   // TODO. renderTableBody 함수를 실행하세요.
 }
+renderTimetable();
 
 
 /* ==================================================

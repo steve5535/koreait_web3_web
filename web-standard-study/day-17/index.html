@@ -21,13 +21,13 @@
       <section class="layout">
         <aside class="control-card">
           <div class="control-section">
-            <label for="classSelect">반 선택</label>
-            <select id="classSelect"></select>
+            <label for="class-select">반 선택</label>
+            <select id="class-select"></select>
           </div>
 
           <div class="control-section">
-            <label for="dateInput">날짜 선택</label>
-            <input id="dateInput" type="date" />
+            <label for="date-input">날짜 선택</label>
+            <input id="date-input" type="date" />
             <p class="help-text">
               선택한 날짜가 포함된 주의 월~금 시간표를 보여줍니다.
             </p>
@@ -43,34 +43,34 @@
             <div class="subject-list">
               <input
                 id="subject1"
-                list="subjectOptions"
+                list="subject-options"
                 type="text"
                 placeholder="선택과목 1 예: 지구과학"
               />
               <input
                 id="subject2"
-                list="subjectOptions"
+                list="subject-options"
                 type="text"
                 placeholder="선택과목 2 예: 화학"
               />
               <input
                 id="subject3"
-                list="subjectOptions"
+                list="subject-options"
                 type="text"
                 placeholder="선택과목 3 예: 물리학"
               />
             </div>
 
-            <datalist id="subjectOptions"></datalist>
+            <datalist id="subject-options"></datalist>
           </div>
 
           <div class="control-section memo-box">
             <div class="memo-title-row">
-              <label for="memoInput">오늘의 메모</label>
-              <span id="memoStatus">자동 저장</span>
+              <label for="memo-input">오늘의 메모</label>
+              <span id="memo-status">자동 저장</span>
             </div>
             <textarea
-              id="memoInput"
+              id="memo-input"
               rows="5"
               placeholder="준비물, 수행평가, 개인 메모 등을 적어보세요."
             ></textarea>
@@ -84,7 +84,9 @@
           <div class="table-top">
             <div>
               <strong>주간 시간표</strong>
-              <p id="selectedInfo">선택과목을 고르면 이곳에 함께 표시됩니다.</p>
+              <p id="selected-info">
+                선택과목을 고르면 이곳에 함께 표시됩니다.
+              </p>
             </div>
             <span class="badge">월 ~ 금 / 1 ~ 7교시</span>
           </div>
