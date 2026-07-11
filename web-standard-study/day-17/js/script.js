@@ -214,7 +214,9 @@ function init() {
 
 function addEvents() {
   // TODO. 반 선택이 변경되었을 때 실행할 이벤트를 연결하세요.
-  classSelect.addEventListener('change')
+  classSelect.addEventListener('change', (event) =>{
+    localStorage.setItem(STORAGE_CLASS, event.target.value);
+  })
   // 힌트:
   // classSelect.addEventListener("change", function () {
   //   1. 입력값 저장 함수 호출
@@ -223,36 +225,44 @@ function addEvents() {
 
   // TODO. 날짜가 변경되었을 때 실행할 이벤트를 연결하세요.
   dateInput.addEventListener('change', (event) => {
-    
+    localStorage.setItem(STORAGE_DATE, event.target.value);
   })
 
   // TODO. 선택과목 input 3개에 input 이벤트를 연결하세요.
   // 힌트:
   // subjectInputs 배열을 forEach로 반복하면 편합니다.
+  subjectInputs.forEach((subject, index) => {
+    subject.addEventListener('change', (event) => {
+        const value = event.target.value;
+        const key = `STORAGE_SUBJECT${index+1}`
+
+        localStorage.setItem(key, value);
+    })
+  })
 
   // TODO. 이전 주 버튼 클릭 이벤트를 연결하세요.
   // 힌트:
   // moveWeek 함수에 -7을 전달하면 됩니다.
-  prevWeekBtn.addEventListener('click')
 
   // TODO. 다음 주 버튼 클릭 이벤트를 연결하세요.
   // 힌트:
   // moveWeek 함수에 7을 전달하면 됩니다.
-  nextWeekBtn.addEventListener('click')
 
   // TODO. 첫 주 버튼 클릭 이벤트를 연결하세요.
   // 힌트:
   // 1. 날짜를 첫 날짜로 바꾼다.
   // 2. 저장한다.
   // 3. 시간표를 다시 그린다.
-  firstWeekBtn.addEventListener('click')
 
   // TODO. 메모 입력 이벤트를 연결하세요.
   // 힌트:
   // 1. memoInput.value를 localStorage에 저장한다.
   // 2. memoStatus에 "저장됨" 같은 문구를 보여준다.
-  memoInput.addEventListener('input')
+  memoInput.addEventListener('input', (event) => {
+
+  })
 }
+addEvents();
 
 
 /* ==================================================
@@ -499,7 +509,7 @@ function moveWeek(dayCount) {
 
 function getMonday(dateText) {
   // TODO. dateText를 Date 객체로 변환하세요.
-  date = new Date(dateText.value);
+  date = new Date(dateText);
   // TODO. getDay()로 요일 숫자를 구하세요.
   const day = date.getDay();
   // TODO. 월요일까지 이동해야 할 날짜 차이를 계산하세요.
@@ -511,10 +521,9 @@ function getMonday(dateText) {
     monday = 1 - day;
   }
   // TODO. 월요일 Date 객체를 반환하세요.
-  return date.setDate(date.getDate() + monday);
+  date.setDate(date.getDate() + monday);
+  return date;
 }
-getMonday(dateInput);
-
 
 /* ==================================================
    11단계. 월요일부터 금요일까지 날짜 배열 만들기
@@ -569,8 +578,6 @@ function makeWeekDates(monday) {
   // TODO. 완성된 배열을 반환하세요.
   return weekDates;
 }
-makeWeekDates(getMonday(dateInput));
-
 
 /* ==================================================
    12단계. Date 객체를 YYYY-MM-DD 문자열로 바꾸기
@@ -689,14 +696,16 @@ function renderTimetable() {
   })
 
   // TODO. 현재 선택된 날짜 값을 가져오세요.
-
-  // TODO. 선택 날짜가 포함된 주의 월요일을 구하세요.
-
-  // TODO. 월요일부터 금요일까지 날짜 배열을 만드세요.
-
-  // TODO. weekLabel에 "3/2 ~ 3/6" 같은 주차 정보를 넣으세요.
-
+  dateInput.addEventListener('change', (event) => {
+    // TODO. 선택 날짜가 포함된 주의 월요일을 구하세요.
+    const mondayDate = getMonday(event.target.value);
+    // TODO. 월요일부터 금요일까지 날짜 배열을 만드세요.
+    const weekDates = makeWeekDates(mondayDate);
+    })
+    // TODO. weekLabel에 "3/2 ~ 3/6" 같은 주차 정보를 넣으세요.
+  
   // TODO. selectedInfo에 현재 선택과목 안내 문구를 넣으세요.
+  
 
   // TODO. renderTableHead 함수를 실행하세요.
 
@@ -955,16 +964,19 @@ function makeLessonCards(lessons) {
 
 function getSelectedSubjects() {
   // TODO. 선택과목을 담을 빈 배열을 만드세요.
-
+  let selectedSubjects = [];
   // TODO. subjectInputs를 반복하세요.
-
-  // TODO. 각 input의 value를 가져오고 trim으로 공백을 제거하세요.
-
-  // TODO. 빈 문자열은 제외하세요.
-
-  // TODO. 중복된 과목은 제외하세요.
-
+  subjectInputs.forEach(subjectInput => {
+    // TODO. 각 input의 value를 가져오고 trim으로 공백을 제거하세요.
+    const subject = subjectInput.value.trim();
+    // TODO. 중복된 과목은 제외하세요.
+    // TODO. 빈 문자열은 제외하세요.
+    if (!selectedSubjects.includes(subject) && !subject == '') {
+        selectedSubjects.push(subject);
+    }
+  })
   // TODO. 완성된 배열을 반환하세요.
+  return selectedSubjects;
 }
 
 
