@@ -233,8 +233,8 @@ function addEvents() {
   // subjectInputs 배열을 forEach로 반복하면 편합니다.
   subjectInputs.forEach((subject, index) => {
     subject.addEventListener('change', (event) => {
+        const key = `STORAGE_SUBJECT${index+1}`;
         const value = event.target.value;
-        const key = `STORAGE_SUBJECT${index+1}`
 
         localStorage.setItem(key, value);
     })
@@ -258,8 +258,8 @@ function addEvents() {
   // 힌트:
   // 1. memoInput.value를 localStorage에 저장한다.
   // 2. memoStatus에 "저장됨" 같은 문구를 보여준다.
-  memoInput.addEventListener('input', (event) => {
-
+  memoInput.addEventListener('change', (event) => {
+    memoStatus.textContent = "저장됨";
   })
 }
 addEvents();
@@ -701,17 +701,24 @@ function renderTimetable() {
     const mondayDate = getMonday(event.target.value);
     // TODO. 월요일부터 금요일까지 날짜 배열을 만드세요.
     const weekDates = makeWeekDates(mondayDate);
-    })
-    // TODO. weekLabel에 "3/2 ~ 3/6" 같은 주차 정보를 넣으세요.
+    // TODO. weekLabel에 "3/2 ~ 3/6" 같은 주차 정보를 넣으세요. x
+  })
   
   // TODO. selectedInfo에 현재 선택과목 안내 문구를 넣으세요.
-  
-
+  let subject = [];
+  subjectInputs.forEach(subjectInput => {
+    subjectInput.addEventListener('change', (event) => {
+      subject.push(event.target.value);
+      console.log(subject);
+      selectedInfo.textContent = subject;
+    })
+  })
   // TODO. renderTableHead 함수를 실행하세요.
 
   // TODO. renderTableBody 함수를 실행하세요.
 }
 renderTimetable();
+
 
 
 /* ==================================================
@@ -976,6 +983,7 @@ function getSelectedSubjects() {
     }
   })
   // TODO. 완성된 배열을 반환하세요.
+  console.log(selectedSubjects)
   return selectedSubjects;
 }
 
