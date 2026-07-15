@@ -28,7 +28,6 @@
   데이터는 data.js 안의 window.timetableData를 사용합니다.
 */
 
-
 /* ==================================================
    1단계. HTML 요소 가져오기
    --------------------------------------------------
@@ -75,7 +74,6 @@ const firstWeekBtn = document.getElementById("firstWeekBtn");
 const memoInput = document.getElementById("memo-input");
 const memoStatus = document.getElementById("memo-status");
 
-
 /* ==================================================
    2단계. 기본 데이터 준비하기
    --------------------------------------------------
@@ -112,12 +110,7 @@ const periods = [1, 2, 3, 4, 5, 6, 7];
 
 // 선택과목 input 3개를 배열로 묶어둔다.
 // 이렇게 하면 나중에 반복문으로 처리하기 편하다.
-const subjectInputs = [
-  subject1Input,
-  subject2Input,
-  subject3Input
-];
-
+const subjectInputs = [subject1Input, subject2Input, subject3Input];
 
 /* ==================================================
    3단계. localStorage key 이름 준비하기
@@ -137,7 +130,6 @@ const STORAGE_SUBJECT1 = "studentTimetable_subject1";
 const STORAGE_SUBJECT2 = "studentTimetable_subject2";
 const STORAGE_SUBJECT3 = "studentTimetable_subject3";
 const STORAGE_MEMO = "studentTimetable_memo";
-
 
 /* ==================================================
    4단계. 처음 실행 함수
@@ -179,7 +171,6 @@ function init() {
   renderTimetable();
 }
 
-
 /* ==================================================
    5단계. 이벤트 연결하기
    --------------------------------------------------
@@ -214,9 +205,9 @@ function init() {
 
 function addEvents() {
   // TODO. 반 선택이 변경되었을 때 실행할 이벤트를 연결하세요.
-  classSelect.addEventListener('change', (event) =>{
+  classSelect.addEventListener("change", (event) => {
     localStorage.setItem(STORAGE_CLASS, event.target.value);
-  })
+  });
   // 힌트:
   // classSelect.addEventListener("change", function () {
   //   1. 입력값 저장 함수 호출
@@ -224,21 +215,21 @@ function addEvents() {
   // });
 
   // TODO. 날짜가 변경되었을 때 실행할 이벤트를 연결하세요.
-  dateInput.addEventListener('change', (event) => {
+  dateInput.addEventListener("change", (event) => {
     localStorage.setItem(STORAGE_DATE, event.target.value);
-  })
+  });
 
   // TODO. 선택과목 input 3개에 input 이벤트를 연결하세요.
   // 힌트:
   // subjectInputs 배열을 forEach로 반복하면 편합니다.
   subjectInputs.forEach((subject, index) => {
-    subject.addEventListener('change', (event) => {
-        const key = `STORAGE_SUBJECT${index+1}`;
-        const value = event.target.value;
+    subject.addEventListener("change", (event) => {
+      const key = `STORAGE_SUBJECT${index + 1}`;
+      const value = event.target.value;
 
-        localStorage.setItem(key, value);
-    })
-  })
+      localStorage.setItem(key, value);
+    });
+  });
 
   // TODO. 이전 주 버튼 클릭 이벤트를 연결하세요.
   // 힌트:
@@ -258,12 +249,11 @@ function addEvents() {
   // 힌트:
   // 1. memoInput.value를 localStorage에 저장한다.
   // 2. memoStatus에 "저장됨" 같은 문구를 보여준다.
-  memoInput.addEventListener('change', (event) => {
+  memoInput.addEventListener("change", (event) => {
     memoStatus.textContent = "저장됨";
-  })
+  });
 }
 addEvents();
-
 
 /* ==================================================
    6단계. 반 선택 목록 만들기
@@ -313,25 +303,26 @@ function makeClassOptions() {
   let classNames = [];
   // TODO. timetableData를 반복하면서 classroomName을 확인하세요.
   // TODO. 중복되지 않는 반 이름만 배열에 추가하세요.
-  timetableData.forEach(tableInfo => {
+  timetableData.forEach((tableInfo) => {
     // TODO. "선택"으로 시작하는 classroomName은 제외하세요.
-    if (!tableInfo.classroomName.startsWith('선택') && !classNames.includes(tableInfo.classroomName)){
-        classNames.push(tableInfo.classroomName);
+    if (
+      !tableInfo.classroomName.startsWith("선택") &&
+      !classNames.includes(tableInfo.classroomName)
+    ) {
+      classNames.push(tableInfo.classroomName);
     }
   });
   // TODO. 반 이름을 숫자 기준으로 정렬하세요.
   classNames.sort();
   // TODO. classSelect 안에 option 태그를 추가하세요.
-  classNames.forEach(className => {
-    const classOption = document.createElement('option');
+  classNames.forEach((className) => {
+    const classOption = document.createElement("option");
     classOption.value = className;
     classOption.textContent = className;
     classSelect.appendChild(classOption);
-  })
+  });
 }
 makeClassOptions();
-
-
 
 /* ==================================================
    7단계. 선택과목 자동완성 목록 만들기
@@ -364,29 +355,32 @@ makeClassOptions();
 
 function makeSubjectOptions() {
   // TODO. 선택과목 이름을 담을 빈 배열을 만드세요.
-  let subjects = []
+  let subjects = [];
   // TODO. timetableData를 반복하세요.
-  timetableData.forEach(tableInfo => {
+  timetableData.forEach((tableInfo) => {
     // TODO. classroomName이 "선택"으로 시작하는 데이터만 처리하세요.
-    if (tableInfo.classroomName.startsWith('선택') && isRealSubject(getSubjectName(tableInfo.content))){
-        // TODO. getSubjectName 함수를 이용해서 과목명을 정리하세요.
-        const subjectName = getSubjectName(tableInfo.content);
-        // TODO. isRealSubject 함수를 이용해서 실제 과목인지 확인하세요.
-        if (isRealSubject(subjectName) && !subjects.includes(subjectName)) {
-            // TODO. 중복되지 않는 과목만 배열에 추가하세요.
-            subjects.push(subjectName);
-        }
+    if (
+      tableInfo.classroomName.startsWith("선택") &&
+      isRealSubject(getSubjectName(tableInfo.content))
+    ) {
+      // TODO. getSubjectName 함수를 이용해서 과목명을 정리하세요.
+      const subjectName = getSubjectName(tableInfo.content);
+      // TODO. isRealSubject 함수를 이용해서 실제 과목인지 확인하세요.
+      if (isRealSubject(subjectName) && !subjects.includes(subjectName)) {
+        // TODO. 중복되지 않는 과목만 배열에 추가하세요.
+        subjects.push(subjectName);
+      }
     }
-  })
+  });
   // TODO. 과목명을 가나다순으로 정렬하세요.
   subjects.sort();
   // TODO. subjectOptions 안에 option 태그를 추가하세요.
-  subjects.forEach(subject => {
-    const subjectOption = document.createElement('option');
+  subjects.forEach((subject) => {
+    const subjectOption = document.createElement("option");
     subjectOption.value = subject;
     subjectOption.textContent = subject;
     subjectOptions.appendChild(subjectOption);
-  })
+  });
 }
 makeSubjectOptions();
 
@@ -415,13 +409,15 @@ function setDefaultDate() {
   // TODO. timetableData의 첫 번째 날짜를 dateInput.value에 넣으세요.
   const now = new Date();
   const offset = now.getTimezoneOffset() * 60000;
-  const localDate = new Date(now.getTime() - offset).toISOString().substring(0, 10);
+  const localDate = new Date(now.getTime() - offset)
+    .toISOString()
+    .substring(0, 10);
   dateInput.value = localDate;
 }
 setDefaultDate();
 
 /* ==================================================
-   9단계. 주차 이동 함수 만들기
+   9단계. 주차 이동 함수 만들기 x
    --------------------------------------------------
    이전 주 / 다음 주 버튼을 눌렀을 때 사용할 함수입니다.
 
@@ -451,18 +447,12 @@ setDefaultDate();
 
 function moveWeek(dayCount) {
   // TODO. 현재 dateInput.value를 Date 객체로 변환하세요.
-
   // TODO. 날짜에 dayCount를 더하세요.
-
   // TODO. 변경된 날짜를 YYYY-MM-DD 문자열로 바꾸세요.
-
   // TODO. dateInput.value에 변경된 날짜를 넣으세요.
-
   // TODO. 변경된 값을 localStorage에 저장하세요.
-
   // TODO. 시간표를 다시 그리세요.
 }
-
 
 /* ==================================================
    10단계. 선택한 날짜가 포함된 주의 월요일 구하기
@@ -566,13 +556,13 @@ function makeWeekDates(monday) {
   // TODO. 월~금 날짜를 담을 빈 배열을 만드세요.
   let weekDates = [];
   // TODO. 5번 반복하세요.
-  for(let i = 0; i <= 4; i++) {
+  for (let i = 0; i <= 4; i++) {
     // TODO. monday를 복사한 Date 객체를 만드세요.
     const newDate = new Date(monday);
     // TODO. 복사한 날짜에 i일을 더하세요.
     newDate.setDate(newDate.getDate() + i);
     // TODO. YYYY-MM-DD 형식으로 바꿔 배열에 넣으세요.
-    const date = newDate.toISOString().split('T')[0];
+    const date = newDate.toISOString().split("T")[0];
     weekDates.push(date);
   }
   // TODO. 완성된 배열을 반환하세요.
@@ -580,7 +570,7 @@ function makeWeekDates(monday) {
 }
 
 /* ==================================================
-   12단계. Date 객체를 YYYY-MM-DD 문자열로 바꾸기
+   12단계. Date 객체를 YYYY-MM-DD 문자열로 바꾸기 x
    --------------------------------------------------
    input type="date"에 값을 넣으려면
    반드시 YYYY-MM-DD 형식이어야 합니다.
@@ -611,16 +601,11 @@ function makeWeekDates(monday) {
 
 function formatDateForInput(date) {
   // TODO. 연도를 구하세요.
-
   // TODO. 월을 구하세요. getMonth()는 0부터 시작합니다.
-
   // TODO. 일을 구하세요.
-
   // TODO. 월과 일을 두 자리 문자열로 바꾸세요.
-
   // TODO. YYYY-MM-DD 형식으로 반환하세요.
 }
-
 
 /* ==================================================
    13단계. 날짜를 화면 표시용으로 짧게 바꾸기
@@ -648,14 +633,12 @@ function formatShortDate(dateText) {
   // TODO. dateText를 Date 객체로 변환하세요.
   const newDate = new Date(dateText);
   // TODO. 월과 일을 구하세요.
-  const month = newDate.getMonth()+1;
+  const month = newDate.getMonth() + 1;
   const date = newDate.getDate();
   // TODO. "월/일" 형태로 반환하세요.
   return `${month}/${date}`;
 }
 formatShortDate("2026-03-02");
-
-
 
 /* ==================================================
    14단계. 시간표 전체 그리기
@@ -689,37 +672,34 @@ formatShortDate("2026-03-02");
 
 function renderTimetable() {
   // TODO. 현재 선택된 반 값을 가져오세요.
-  classSelect.addEventListener('change', (event) => {
+  classSelect.addEventListener("change", (event) => {
     // TODO. pageTitle에 "2학년 1반 시간표" 같은 제목을 넣으세요.
     choiceClass = event.target.value;
     pageTitle.textContent = `2학년 ${choiceClass}반 시간표`;
-  })
+  });
 
   // TODO. 현재 선택된 날짜 값을 가져오세요.
-  dateInput.addEventListener('change', (event) => {
+  dateInput.addEventListener("change", (event) => {
     // TODO. 선택 날짜가 포함된 주의 월요일을 구하세요.
     const mondayDate = getMonday(event.target.value);
     // TODO. 월요일부터 금요일까지 날짜 배열을 만드세요.
     const weekDates = makeWeekDates(mondayDate);
     // TODO. weekLabel에 "3/2 ~ 3/6" 같은 주차 정보를 넣으세요. x
-  })
-  
+  });
+
   // TODO. selectedInfo에 현재 선택과목 안내 문구를 넣으세요.
   let subject = [];
-  subjectInputs.forEach(subjectInput => {
-    subjectInput.addEventListener('change', (event) => {
+  subjectInputs.forEach((subjectInput) => {
+    subjectInput.addEventListener("change", (event) => {
       subject.push(event.target.value);
-      console.log(subject);
       selectedInfo.textContent = subject;
-    })
-  })
+    });
+  });
   // TODO. renderTableHead 함수를 실행하세요.
 
   // TODO. renderTableBody 함수를 실행하세요.
 }
 renderTimetable();
-
-
 
 /* ==================================================
    15단계. 테이블 머리 부분 그리기
@@ -758,16 +738,20 @@ renderTimetable();
 
 function renderTableHead(weekDates) {
   // TODO. tableHead에 넣을 html 문자열을 만드세요.
-
+  let tableHeadHtml = "<tr>";
   // TODO. 첫 번째 th에는 "교시"를 넣으세요.
-
+  tableHeadHtml += "<th>교시</th>";
   // TODO. weekDates를 반복하세요.
-
-  // TODO. 요일 이름과 날짜를 th로 만드세요.
-
+  weekDates.forEach((weekDate, i) => {
+    // TODO. 요일 이름과 날짜를 th로 만드세요.
+    const day = dayNames[i];
+    const shorDate = formatShortDate(weekDate);
+    tableHeadHtml += `<th>${day} ${shorDate}</th>`;
+  });
+  tableHeadHtml += "</tr>";
   // TODO. 완성된 html을 tableHead.innerHTML에 넣으세요.
+  tableHead.innerHTML = tableHeadHtml;
 }
-
 
 /* ==================================================
    16단계. 테이블 본문 그리기
@@ -808,22 +792,14 @@ function renderTableHead(weekDates) {
 
 function renderTableBody(weekDates) {
   // TODO. tableBody에 넣을 html 문자열을 만드세요.
-
   // TODO. periods 배열을 반복하세요.
-
   // TODO. 각 교시마다 tr을 만드세요.
-
   // TODO. 첫 번째 칸에는 현재 교시를 표시하세요.
-
   // TODO. weekDates를 반복하면서 날짜별 칸을 만드세요.
-
   // TODO. findLessons 함수로 현재 날짜/교시의 수업을 찾으세요.
-
   // TODO. makeLessonCards 함수로 수업 카드 HTML을 만드세요.
-
   // TODO. 완성된 html을 tableBody.innerHTML에 넣으세요.
 }
-
 
 /* ==================================================
    17단계. 현재 칸에 들어갈 수업 찾기
@@ -881,22 +857,14 @@ function renderTableBody(weekDates) {
 
 function findLessons(date, period) {
   // TODO. 현재 선택한 반 값을 가져오세요.
-
   // TODO. 현재 입력한 선택과목 배열을 가져오세요.
-
   // TODO. timetableData를 filter로 반복하세요.
-
   // TODO. 날짜가 같은지 확인하세요.
-
   // TODO. 교시가 같은지 확인하세요.
-
   // TODO. 일반 반 수업인지 확인하세요.
-
   // TODO. 선택과목 수업인지 확인하세요.
-
   // TODO. 조건에 맞는 수업만 반환하세요.
 }
-
 
 /* ==================================================
    18단계. 수업 카드 HTML 만들기
@@ -932,16 +900,11 @@ function findLessons(date, period) {
 
 function makeLessonCards(lessons) {
   // TODO. lessons 배열이 비어 있으면 "-" 표시용 HTML을 반환하세요.
-
   // TODO. lessons를 반복하면서 카드 HTML을 만드세요.
-
   // TODO. getLessonType 함수로 카드 종류 class를 구하세요.
-
   // TODO. 수업내용과 반/강의실명을 카드에 넣으세요.
-
   // TODO. 완성된 HTML 문자열을 반환하세요.
 }
-
 
 /* ==================================================
    19단계. 선택과목 input 값 가져오기
@@ -973,20 +936,19 @@ function getSelectedSubjects() {
   // TODO. 선택과목을 담을 빈 배열을 만드세요.
   let selectedSubjects = [];
   // TODO. subjectInputs를 반복하세요.
-  subjectInputs.forEach(subjectInput => {
+  subjectInputs.forEach((subjectInput) => {
     // TODO. 각 input의 value를 가져오고 trim으로 공백을 제거하세요.
     const subject = subjectInput.value.trim();
     // TODO. 중복된 과목은 제외하세요.
     // TODO. 빈 문자열은 제외하세요.
-    if (!selectedSubjects.includes(subject) && !subject == '') {
-        selectedSubjects.push(subject);
+    if (!selectedSubjects.includes(subject) && !subject == "") {
+      selectedSubjects.push(subject);
     }
-  })
+  });
   // TODO. 완성된 배열을 반환하세요.
-  console.log(selectedSubjects)
+  console.log(selectedSubjects);
   return selectedSubjects;
 }
-
 
 /* ==================================================
    20단계. 선택과목 안내 문구 만들기
@@ -1016,12 +978,9 @@ function getSelectedSubjects() {
 
 function makeSelectedSubjectText() {
   // TODO. 선택과목 배열을 가져오세요.
-
   // TODO. 선택과목이 없으면 기본 안내 문구를 반환하세요.
-
   // TODO. 선택과목이 있으면 "선택과목: ..." 형태의 문구를 반환하세요.
 }
-
 
 /* ==================================================
    21단계. content에서 실제 과목명만 뽑기
@@ -1060,13 +1019,12 @@ function getSubjectName(content) {
   // TODO. content를 문자열로 변환하세요.
   content = String(content);
   // TODO. "[보강]" 문자를 제거하세요.
-  content = content.replace('[보강]','');
+  content = content.replace("[보강]", "");
   // TODO. 앞뒤 공백을 제거하세요.
   content = content.trim();
   // TODO. 정리된 과목명을 반환하세요.
   return content;
 }
-
 
 /* ==================================================
    22단계. 실제 과목인지 확인하기
@@ -1112,15 +1070,25 @@ function getSubjectName(content) {
 
 function isRealSubject(subjectName) {
   // TODO. 과목이 아닌 값들을 배열로 만드세요.
-  notSubject = ['대체공휴일', '어린이날', '재량휴업일', '지방선거일', '노동절', '현충일', '제헌절', '여름방학', '토요휴업일', '자기주도학습'];
+  notSubject = [
+    "대체공휴일",
+    "어린이날",
+    "재량휴업일",
+    "지방선거일",
+    "노동절",
+    "현충일",
+    "제헌절",
+    "여름방학",
+    "토요휴업일",
+    "자기주도학습",
+  ];
   // TODO. subjectName이 제외 배열에 포함되어 있는지 확인하세요.
-  if (notSubject.includes(subjectName)){
+  if (notSubject.includes(subjectName)) {
     return false;
   }
   return true;
   // TODO. 과목이면 true, 과목이 아니면 false를 반환하세요.
 }
-
 
 /* ==================================================
    23단계. 수업 카드 종류 판단하기
@@ -1165,16 +1133,11 @@ function isRealSubject(subjectName) {
 
 function getLessonType(lesson) {
   // TODO. classroomName을 가져오세요.
-
   // TODO. classroomName이 "선택"으로 시작하면 "elective"를 반환하세요.
-
   // TODO. content에서 과목명을 정리하세요.
-
   // TODO. 실제 과목이 아니면 "rest"를 반환하세요.
-
   // TODO. 그 외에는 "normal"을 반환하세요.
 }
-
 
 /* ==================================================
    24단계. 반, 날짜, 선택과목 저장하기
@@ -1204,16 +1167,11 @@ function getLessonType(lesson) {
 
 function saveControls() {
   // TODO. 선택한 반을 localStorage에 저장하세요.
-
   // TODO. 선택한 날짜를 localStorage에 저장하세요.
-
   // TODO. 선택과목 1 값을 localStorage에 저장하세요.
-
   // TODO. 선택과목 2 값을 localStorage에 저장하세요.
-
   // TODO. 선택과목 3 값을 localStorage에 저장하세요.
 }
-
 
 /* ==================================================
    25단계. 저장된 반, 날짜, 선택과목 불러오기
@@ -1246,22 +1204,14 @@ function saveControls() {
 
 function loadSavedControls() {
   // TODO. localStorage에서 저장된 반을 가져오세요.
-
   // TODO. localStorage에서 저장된 날짜를 가져오세요.
-
   // TODO. localStorage에서 저장된 선택과목 1을 가져오세요.
-
   // TODO. localStorage에서 저장된 선택과목 2를 가져오세요.
-
   // TODO. localStorage에서 저장된 선택과목 3을 가져오세요.
-
   // TODO. 저장된 반이 있고 실제 option에 존재하면 classSelect.value에 넣으세요.
-
   // TODO. 저장된 날짜가 있으면 dateInput.value에 넣으세요.
-
   // TODO. 저장된 선택과목 값이 있으면 각 input.value에 넣으세요.
 }
-
 
 /* ==================================================
    26단계. 저장된 반이 실제 option에 있는지 확인하기
@@ -1299,12 +1249,9 @@ function loadSavedControls() {
 
 function hasClassOption(className) {
   // TODO. classSelect.options를 배열로 바꾸세요.
-
   // TODO. option 중에서 value가 className과 같은 것이 있는지 확인하세요.
-
   // TODO. 있으면 true, 없으면 false를 반환하세요.
 }
-
 
 /* ==================================================
    27단계. 오늘의 메모 저장하기
@@ -1329,10 +1276,8 @@ function hasClassOption(className) {
 
 function saveMemo() {
   // TODO. memoInput.value를 localStorage에 저장하세요.
-
   // TODO. memoStatus에 저장 상태 문구를 표시하세요.
 }
-
 
 /* ==================================================
    28단계. 오늘의 메모 불러오기
@@ -1354,12 +1299,9 @@ function saveMemo() {
 
 function loadSavedMemo() {
   // TODO. localStorage에서 저장된 메모를 가져오세요.
-
   // TODO. 저장된 메모가 있으면 memoInput.value에 넣으세요.
-
   // TODO. memoStatus에 불러온 상태 문구를 표시하세요.
 }
-
 
 /* ==================================================
    29단계. 마지막 실행
